@@ -2,9 +2,45 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>我的網站</title>
+    <title>ESP32 Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Hello! 這是我的第一個 GitHub 網站 🎉</h1>
+
+<h2>溫溼度 / 電池電壓</h2>
+<canvas id="chart"></canvas>
+
+<script>
+fetch('https://esp32-monitor-7ab81-default-rtdb.asia-southeast1.firebasedatabase.app/data.json')
+.then(r => r.json())
+.then(data => {
+
+  const time = [];
+  const temp = [];
+  const hum = [];
+  const batt = [];
+
+  Object.values(data).forEach(d => {
+    time.push(new Date(d.time).toLocaleTimeString());
+    temp.push(d.temp);
+    hum.push(d.hum);
+    batt.push(d.batt);
+  });
+
+  new Chart(document.getElementById("chart"), {
+    type: 'line',
+    data: {
+      labels: time,
+      datasets: [
+        { label: 'Temp', data: temp }, 
+        { label: 'Hum', data: hum },
+        { label: 'Batt', data: batt }
+      ]
+    }
+  });
+
+});
+</script>
+
 </body>
 </html>
