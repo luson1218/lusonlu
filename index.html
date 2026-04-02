@@ -11,7 +11,7 @@
 <canvas id="chart"></canvas>
 
 <script>
-fetch('https://esp32-monitor-7ab81-default-rtdb.asia-southeast1.firebasedatabase.app/data.json')
+fetch('https://esp32-monitor-7ab81-default-rtdb.asia-southeast1.firebasedatabase.app/data.json?orderBy="time"&limitToLast=1000')
 .then(r => r.json())
 .then(data => {
 
